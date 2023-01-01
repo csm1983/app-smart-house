@@ -1,0 +1,411 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600&display=swap');
+@import url('./fonts/icons/style.css');
+
+:root {
+    --color_bg: #e0e5eb; 
+    --gradient: linear-gradient(to right, #a894e6, #7e77ee);
+    --grey: #f0f0f0;
+    --grey2: rgb(157, 161, 157);
+    --light: white;
+    --transition: all 0.3s ease-in-out;
+}
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rubik', sans-serif;
+    background-color: #e0e5eb;
+    height: 100vh;  /*100vh - 100% высоты экрана*/
+    display: grid; 
+    align-items: center; /*центрирование по высоте*/
+    justify-items: center; /*центрирование по горизонтали*/
+}
+
+.mobile {
+    width: 350px;
+    height: 700px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.4);
+    display: grid;
+    grid-template-rows: 48px 1fr 62px; /* задается, что сетка имеет три ряда, первый ряд высотой 48пикселей, нижний ряд 62 пикселя */
+}
+
+.mobile__top, .mobile__bottom {
+    align-self: center; /*центрировать по вертикали внутри ячейки*/
+    justify-self: center;   /*центрировать по горизонтали*/
+}
+
+.mobile__content {
+    background-color: #fff;
+}
+
+
+
+
+.rooms {
+    display: grid;
+    /* display: none; */
+    grid-template-columns: repeat(2, 1fr); /* 2 колонки по одной фракции и ниже задаем отступы */
+    margin: 0 20px;
+    justify-content: center;
+    align-items: center;
+    /* justify-items: center; */
+    grid-gap: 14px; /*отступы между ячейками*/
+}
+
+.room {
+    cursor: pointer;
+    display: grid;
+    grid-template-rows: 130px 30px;
+    align-content: center;
+    font-size: 16px;
+    text-align: center;
+    background-color: var(--grey);
+    border-radius: 12px;
+}
+
+.room.selected {
+    background: var(--gradient);
+    color: white;
+}
+
+.room.selected i {
+    opacity: 1;
+}
+
+.room i {
+    align-self: center;
+    font-size: 5em;
+    opacity: 0.7;
+}
+
+/* Страница настроек комнат */
+
+.settings {
+    display: none;
+    /* display: block; */
+    padding: 0 20px;
+}
+
+.settings_tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 колонуи по одной фракции */
+    grid-template-rows: 94px;
+    grid-gap: 14px;   
+}
+
+.tab {
+    cursor: pointer;
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+    align-content: center;
+    font-size: 12px;
+    text-align: center;
+    background-color: var(--grey);
+    border-radius: 12px;
+}
+
+.tab.selected {
+    background: var(--gradient);
+    color: white;
+}
+
+.tab.selected i {
+    opacity: 1;
+}
+
+.tab i {
+    align-self: center;
+    font-size: 3em;
+    opacity: 0.7;
+}
+
+
+/* Экраны элементов настроек */
+.settings_screen {
+    display: none;
+}
+
+.settings_screen.selected {
+    display: block;
+}
+
+.settings_screen-title {
+    text-align: center;
+    margin: 30px 0 15px;
+    font-weight: 300;
+}
+
+.settings_screen-icon {
+    text-align: center;
+    font-size: 30px;
+    color: black;
+    margin-bottom: 15px;
+}
+
+/* кнопка регулировки температуры */
+
+
+
+.temperature-button {
+    cursor: pointer;
+    width: 240px;
+    height: 240px;
+    margin: 0 auto;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    position: relative;
+}
+
+.temperature-button_info {
+    position: relative;
+    font-size: 32px;
+    width: 70%;
+    height: 70%;
+    border-radius: 70%;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.temperature-button_info::before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 4%;
+    right: 4%;
+    top: 4%;
+    bottom: 4%;
+    border-radius: 100%;
+    opacity: 0.4;
+    border: 1px solid black;
+}
+
+.dots-box {
+    transform: rotate(5deg);
+    transform-origin: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+.dots, .line, .line-active, .round, .separate-lines, .separate-dots {
+    fill: transparent; /* заливка свг картинки - прозрачная */
+    stroke: var(--grey2); /* установка цвета обводки */
+    /* stroke - обводка */
+    stroke-width: 3px; /* ширина обводки */
+    stroke-linecap: round; /*скругляет фрагменты обводки*/
+    stroke-dasharray: 0 21; /* делит обводку на фрагменты*/
+    transition: all 0.1s ease-in-out;
+}
+
+.line, .line-active, .round {
+    stroke-width: 1px;
+    stroke-dasharray: 276 276;
+    transform-origin: center; /* установка точки вращения в центр фигуры */
+    transform: rotate(48deg);
+}
+
+.line-active {
+    stroke: black;
+    stroke-width: 2px;
+    stroke-dasharray: 54 276; /* от 54 до 276 */
+    transition: all 0.1s ease-in-out;
+}
+
+.round {
+    stroke-width: 6px;
+    stroke-dasharray: 0 276;
+    transform: rotate(-240deg); /* от - 240 до 48deg */
+}
+
+.separate-lines,
+.separate-dots {
+    stroke: white;
+    transform-origin: center;
+    transform: rotate(60deg);
+
+}
+
+.separate-dots {
+    stroke-dasharray: 40 313;
+}
+
+.separate-lines {
+    transform: rotate(49deg);
+    stroke-dasharray: 53 276;
+}
+
+/* power */
+.power {
+    background: var(--gradient);
+    color: white;
+    width: 44px;
+    height: 44px;
+    border-radius: 44px;
+    font-size: 24px;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    padding-bottom: 2px;
+    margin: 1px auto;
+}
+
+.power.off {
+    background: var(--grey2);
+}
+
+.power-label {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.save-button {
+    cursor: pointer;
+    background: var(--gradient);
+    color: white;
+    width: 220px;
+    margin: 15px auto 0;
+    border-radius: 100px;
+    font-size: 16px;
+    text-align: center;
+    padding: 16px;
+}
+
+
+/* Slider */
+.slider {
+    cursor: pointer;
+    width: 100px;
+    height: 250px;
+    margin: 0 auto;
+    background-color: var(--grey);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+}
+.slider_progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    min-height: 30px; /* что бы оставалась часть заливки когда занчение установлено до 0 */
+    height: 45%;
+    /* transition: all 0.5s ease-in-out; */
+    pointer-events: none;
+}
+
+.slider_progress span {
+    pointer-events: none; /* убираем отслеживание событий */
+}
+
+/* Switch */
+.switch {
+    cursor: pointer;
+    width: 60px;
+    height: 30px;
+    border-radius: 60px;
+    background: var(--grey);
+    margin: 30px auto;
+    position: relative;
+}
+
+.switch.off div {
+    left: 52%;
+    /* если к switch присоединяется кликом клас off то <div> должен переместится   */
+    /* и таким образом switch переключается */
+    background: var(--grey2);
+}
+
+.switch div {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    background: var(--gradient);
+    transition: var(--transition);
+}
+
+/*ui components*/
+
+.selectbox {
+    cursor: pointer;
+    width: max-content;
+    margin: 0 auto;
+    position: relative; 
+    margin-bottom: 25px;   
+}
+.selectbox_selected {
+    font-size: 18px;
+    font-weight: 600;
+    position: relative;
+    
+    z-index: 2;
+    background-color: #fff;
+    
+}
+
+.selectbox.open .ic_arrow{
+    transform: rotate(-180deg);
+}
+
+.ic_arrow {
+    display: inline-block;
+    font-size: 0.9em; /* привязываем размер шрифта иконный к размеру шрифта родительского блока */
+    margin-left: 10px;
+    transform: rotate(0deg);
+    transition: var(--transition);
+}
+
+.selectbox.open .selectbox_list {
+    top: 120%;
+    max-height: 200px;
+}
+
+.selectbox_list {
+    position: absolute;
+    top: 0;
+    left: -12px;
+    right: -12px;
+    z-index: 1; 
+    /*этот элемент становится поверх остальных элементов*/
+    max-height: 0;
+    overflow: hidden;
+    padding: 8px 12px;
+    border-radius: 3px;
+    background-color: #fff;
+    transition: var(--transition);
+}
+.selectbox_item {
+    cursor: pointer; /*при наведении изменяется курсор*/ 
+    width: max-content;    
+}
+
+
+.selectbox_item.selected,
+.selectbox_item:hover {
+    color: #7e77ee;
+    font-weight: 600;
+}
+
+.selectbox_item:not(:last-child) { 
+    /*всем элементам кроме последнего добавляем оступ снизу*/
+    margin-bottom: 4px;
+}
